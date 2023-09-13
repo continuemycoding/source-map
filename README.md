@@ -11,6 +11,22 @@ This is a library to generate and consume the source map format
 
     $ npm install source-map
 
+```javascript
+const fs = require('fs');
+const { SourceMapConsumer } = require('source-map');
+
+const sourceMap = fs.readFileSync('index.js.map', 'utf8');
+
+SourceMapConsumer.with(sourceMap, null, consumer => {
+    const { line, column, source } = consumer.originalPositionFor({
+        line: 1, // 你想要还原的行号
+        column: 218556, // 你想要还原的列号
+    });
+
+    console.log(`原始代码位置：${source}:${line}:${column}`);
+});
+```
+
 ## Use on the Web
 
 ```html
